@@ -1,33 +1,22 @@
-# PharoEDA Adapters
+# PharoEDA Core
 
-This project discovers and provides adapters for PharoEDA applications's ports.
+This PharoEDA component contains the Core packages: EDA-Application, EDA-Commands, EDA-Events, etc.
 
 ## Motivation
 
-PharoEDA applications use ports and adapters, so they are decoupled from the actual technologies used.
-This project provides adapters to choose from when launching `EDAApplication` instances.
+This project contains only the core part of PharoEDA.
 
 ## Design
 
-PharoEDA-Adapters will inspect its environment and try to build functioning adapters. Once an adapter is properly built, it'll emit an event. PharoEDA has built-in support for consuming and projecting those events.
+PharoEDA-Core includes the basic components of PharoEDA: EDAApplications, EDACommands, EDAEventSourcingEvents.
 
 ## Usage
 
 First, load it with Metacello:
 
 ```smalltalk
-Metacello new repository: 'github://rydnr/pharo-eda-adapters:main'; baseline: #PharoEDAAdapters; load
+Metacello new repository: 'github://rydnr/pharo-eda-core:main'; baseline: #PharoEDACore; load
 ```
-
-Then, run it with
-
-```smalltalk
-PharoEDAAdapters run
-```
-
-## Work in progress
-
-- Support for current PharoEDA adapters: MongoDB, STOMP.
 
 ## Credits
 

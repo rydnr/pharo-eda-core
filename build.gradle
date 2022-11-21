@@ -4,7 +4,7 @@ version = "${tag}-SNAPSHOT" // do not forget to update the version also in docke
 apply plugin: PharoPlugin
 
 pharo {
-    imageVersion = '90'
+    imageVersion = '100'
 }
 
 def imageName = "${project.name}-${project.version}"
@@ -26,25 +26,25 @@ task retrieveFreshGtoolkitImage(type: RetrieveFreshGtoolkitImageTask, dependsOn:
   gtHome = gtoolkitHome
 }
 
-task loadPharoEDAAdapters(type: EvalSmalltalkExpressionTask, dependsOn: downloadFreshPharoImage) {
+task loadPharoEDACore(type: EvalSmalltalkExpressionTask, dependsOn: downloadFreshPharoImage) {
     pharoPath = customPharoPath
     commonPharoArgs = customPharoArgs
-    expression = "Metacello new repository: 'github://rydnr/pharo-eda-adapters:${branchOrTag}'; baseline: 'PharoEDAAdapters'; onConflictUseLoaded; load"
+    expression = "Metacello new repository: 'github://rydnr/pharo-eda-core:${branchOrTag}'; baseline: 'PharoEDACore'; onConflictUseLoaded; load"
 }
 
-task loadPharoEDAAdaptersGt(type: EvalSmalltalkExpressionTask, dependsOn: retrieveFreshGtoolkitImage) {
+task loadPharoEDACoreGt(type: EvalSmalltalkExpressionTask, dependsOn: retrieveFreshGtoolkitImage) {
     pharoPath = customPharoPath
     commonPharoArgs = customPharoArgs
-    expression = "Metacello new repository: 'github://rydnr/pharo-eda-adapters:${branchOrTag}'; baseline: 'PharoEDAAdapters'; onConflictUseLoaded; load"
+    expression = "Metacello new repository: 'github://rydnr/pharo-eda-core:${branchOrTag}'; baseline: 'PharoEDACore'; onConflictUseLoaded; load"
 }
 
-task customizeImage(type: RunSmalltalkScriptTask, dependsOn: loadPharoEDAAdapters) {
+task customizeImage(type: RunSmalltalkScriptTask, dependsOn: loadPharoEDACore) {
     script = "customize.st"
     pharoPath = customPharoPath
     commonPharoArgs = customPharoArgs
 }
 
-task customizeImageGt(type: RunSmalltalkScriptTask, dependsOn: loadPharoEDAAdaptersGt) {
+task customizeImageGt(type: RunSmalltalkScriptTask, dependsOn: loadPharoEDACoreGt) {
     script = "customize.st"
     pharoPath = customPharoPath
     commonPharoArgs = customPharoArgs

@@ -1,0 +1,3 @@
+${inputFile:path=Chapters/Chapter01/01-introduction.pillar}$
+${inputFile:path=Chapters/Chapter01/02-json-discoverers.pillar}$
+${inputFile:path=Chapters/Chapter01/03-adapter-candidates.pillar}$

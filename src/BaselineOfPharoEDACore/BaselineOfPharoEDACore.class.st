@@ -52,8 +52,7 @@ BaselineOfPharoEDACore >> declarePackagesIn: spec [
 		with: [ spec requires: #( 'PharoEDAPorts' 'NeoJSON' 'ObjectDiff' ) ];
 		package: #'EDA-Application' with: [ 
 			spec requires:
-					#( 'EDA-Events' 'EDA-Commands' 'PharoEDACommon' 'PharoEDASettings'
-					   'PharoEDAAdapters' ) ];
+					#( 'EDA-Events' 'EDA-Commands' 'PharoEDACommon' ) ];
 		package: #'EDA-Commands-Tests'
 		with: [ 
 			spec requires: #( 'BabyMock2' 'PharoEDACommon' 'EDA-TestSupport' ) ];

@@ -106,6 +106,34 @@ BaselineOfPharoEDACore >> includeObjectDiff: spec [
 ]
 
 { #category : #baselines }
+BaselineOfPharoEDACore >> includePharoEDACommon: spec [
+
+	spec
+		baseline: 'PharoEDACommon'
+		with: [ spec repository: 'github://rydnr/pharo-eda-common:main' ].
+	^ spec
+]
+
+{ #category : #baselines }
+BaselineOfPharoEDACore >> includePharoEDAApi: spec [
+
+	spec
+		baseline: 'PharoEDAApi'
+		with: [ spec repository: 'github://rydnr/pharo-eda-api:main' ].
+	^ spec
+]
+
+{ #category : #baselines }
+BaselineOfPharoEDACore >> includePharoEDAPorts: spec [
+
+	spec
+		baseline: 'PharoEDAPorts'
+		with: [ spec repository: 'github://rydnr/pharo-eda-ports:main' ].
+	^ spec
+]
+
+
+{ #category : #baselines }
 BaselineOfPharoEDACore >> postload: loader package: packageSpec [
 
 	| location |

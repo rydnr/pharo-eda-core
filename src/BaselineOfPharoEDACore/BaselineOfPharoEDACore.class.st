@@ -5,26 +5,7 @@ Class {
 }
 
 { #category : #baselines }
-BaselineOfPharoEDACore >> baseline: spec [
-
-	<baseline>
-	spec for: #common do: [ 
-		spec blessing: #baseline.
-		spec postLoadDoIt: #postload:package:.
-		self
-			includeBabyMock2: spec;
-			includeObjectDiff: spec;
-			includeNeoJSON: spec;
-			includeGToolkit: spec;
-            includePharoEDACommon: spec;
-            includePharoEDAApi: spec;
-            includePharoEDAPorts: spec;
-			declarePackagesIn: spec;
-			declareGroupsIn: spec ]
-]
-
-{ #category : #baselines }
-BaselineOfPharoEDACore >> declareGroupsIn: spec [
+BaselineOfPharoEDACore class >> declareGroupsIn: spec [
 
 	spec
 		group: 'core'
@@ -38,7 +19,7 @@ BaselineOfPharoEDACore >> declareGroupsIn: spec [
 ]
 
 { #category : #baselines }
-BaselineOfPharoEDACore >> declarePackagesIn: spec [
+BaselineOfPharoEDACore class >> declarePackagesIn: spec [
 
 	spec
 		package: #'EDA-Events'
@@ -70,7 +51,7 @@ BaselineOfPharoEDACore >> declarePackagesIn: spec [
 ]
 
 { #category : #baselines }
-BaselineOfPharoEDACore >> includeBabyMock2: spec [
+BaselineOfPharoEDACore class >> includeBabyMock2: spec [
 
 	spec project: 'BabyMock2' with: [ 
 		spec
@@ -81,7 +62,7 @@ BaselineOfPharoEDACore >> includeBabyMock2: spec [
 ]
 
 { #category : #baselines }
-BaselineOfPharoEDACore >> includeGToolkit: spec [
+BaselineOfPharoEDACore class >> includeGToolkit: spec [
 
 	spec
 		baseline: 'GToolkit'
@@ -90,7 +71,7 @@ BaselineOfPharoEDACore >> includeGToolkit: spec [
 ]
 
 { #category : #baselines }
-BaselineOfPharoEDACore >> includeNeoJSON: spec [
+BaselineOfPharoEDACore class >> includeNeoJSON: spec [
 
 	spec
 		baseline: 'NeoJSON'
@@ -99,7 +80,7 @@ BaselineOfPharoEDACore >> includeNeoJSON: spec [
 ]
 
 { #category : #baselines }
-BaselineOfPharoEDACore >> includeObjectDiff: spec [
+BaselineOfPharoEDACore class >> includeObjectDiff: spec [
 
 	spec
 		baseline: 'ObjectDiff'
@@ -108,16 +89,7 @@ BaselineOfPharoEDACore >> includeObjectDiff: spec [
 ]
 
 { #category : #baselines }
-BaselineOfPharoEDACore >> includePharoEDACommon: spec [
-
-	spec
-		baseline: 'PharoEDACommon'
-		with: [ spec repository: 'github://rydnr/pharo-eda-common:main' ].
-	^ spec
-]
-
-{ #category : #baselines }
-BaselineOfPharoEDACore >> includePharoEDAApi: spec [
+BaselineOfPharoEDACore class >> includePharoEDAApi: spec [
 
 	spec
 		baseline: 'PharoEDAApi'
@@ -126,7 +98,16 @@ BaselineOfPharoEDACore >> includePharoEDAApi: spec [
 ]
 
 { #category : #baselines }
-BaselineOfPharoEDACore >> includePharoEDAPorts: spec [
+BaselineOfPharoEDACore class >> includePharoEDACommon: spec [
+
+	spec
+		baseline: 'PharoEDACommon'
+		with: [ spec repository: 'github://rydnr/pharo-eda-common:main' ].
+	^ spec
+]
+
+{ #category : #baselines }
+BaselineOfPharoEDACore class >> includePharoEDAPorts: spec [
 
 	spec
 		baseline: 'PharoEDAPorts'
@@ -134,6 +115,24 @@ BaselineOfPharoEDACore >> includePharoEDAPorts: spec [
 	^ spec
 ]
 
+{ #category : #baselines }
+BaselineOfPharoEDACore >> baseline: spec [
+
+	<baseline>
+	spec for: #common do: [ 
+		spec blessing: #baseline.
+		spec postLoadDoIt: #postload:package:.
+		self class
+			includeBabyMock2: spec;
+			includeObjectDiff: spec;
+			includeNeoJSON: spec;
+			includeGToolkit: spec;
+			includePharoEDACommon: spec;
+			includePharoEDAApi: spec;
+			includePharoEDAPorts: spec;
+			declarePackagesIn: spec;
+			declareGroupsIn: spec ]
+]
 
 { #category : #baselines }
 BaselineOfPharoEDACore >> postload: loader package: packageSpec [

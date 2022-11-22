@@ -16,6 +16,9 @@ BaselineOfPharoEDACore >> baseline: spec [
 			includeObjectDiff: spec;
 			includeNeoJSON: spec;
 			includeGToolkit: spec;
+            includePharoEDACommon: spec;
+            includePharoEDAApi: spec;
+            includePharoEDAPorts: spec;
 			declarePackagesIn: spec;
 			declareGroupsIn: spec ]
 ]

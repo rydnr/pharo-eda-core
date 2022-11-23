@@ -288,13 +288,10 @@ EDAApplication >> doInitialize [
 { #category : #setup }
 EDAApplication >> doSetup [
 
-	SettingBrowser open delete.
 	self setupLogging.
 	self setupEventAnnouncer.
 	self setupEventProducer.
 	self setupEventStore.
-	self setupRepositories.
-	self setupProjections.
 	self setupProjectors.
 	self enableSynchronization ifTrue: [ self synchronizeProjections ].
 	self setupCommandDispatcher.
@@ -306,7 +303,7 @@ EDAApplication >> doSetup [
 { #category : #accessing }
 EDAApplication >> enableSynchronization [
 
-	^ projectionSynchronizationEnabled
+	^ projectionSynchronizationEnabled ifNil: [ self enableSynchronization: true. projectionSynchronizationEnabled ]
 ]
 
 { #category : #accessing }
@@ -609,7 +606,8 @@ EDAApplication >> resolveSettingsPort: aPort [
 
 { #category : #'multitenancy support' }
 EDAApplication >> retrieveAllTenants [
-	self shouldBeImplemented
+
+	^ OrderedCollection with: 'default'
 ]
 
 { #category : #files }
@@ -645,14 +643,16 @@ EDAApplication >> setupCommandBuilder [
 
 { #category : #'setup - commands' }
 EDAApplication >> setupCommandConsumer [
-	^ self setupCommandConsumerWithCommandListener: EDAACommandStompTopicListener new
+
+	^ self setupCommandConsumerWithCommandListener:
+		  (EDAACommandStompTopicListener withConfig: self portSettings commandListenerSettings forApplication: self)
 ]
 
 { #category : #'setup - commands' }
 EDAApplication >> setupCommandConsumerWithCommandListener: listener [
 
 	| materializer |
-	listener client debug: self commandListenerClientDebug.
+	listener client debug: self portSettings commandListenerSettings debug.
 	materializer := EDAJsonCommandMaterializer forApplication: self.
 	self commandConsumer: (EDAPCommandConsumer
 			 busListener: listener
@@ -662,12 +662,20 @@ EDAApplication >> setupCommandConsumerWithCommandListener: listener [
 
 { #category : #setup }
 EDAApplication >> setupCommandDispatcher [
-	| handlerScanner  handlerFactory commandRegistry |
-	EDADeleteCommandHandler eventStore: self eventStore; eventBus: self eventProducer.
-	handlerScanner := EDAPragmaCommandHandlerMethodsScanner scannerPragma: #useAsCommandHandlerFor: from: EDAAggregateRoot.
-	handlerFactory := EDACommandHandlerFactory factoryWithEventStore: self eventStore eventBus: self eventProducer.
-	commandRegistry := EDACommandHandlersRegistry withScanner: handlerScanner factory: handlerFactory.
-	self commandDispatcher: (EDACommandDispatcher withRegistry: commandRegistry).
+
+	| handlerScanner handlerFactory commandRegistry |
+	handlerScanner := EDAPragmaCommandHandlerMethodsScanner
+		                  scannerPragma: #useAsCommandHandlerFor:
+		                  from: EDAAggregateRoot.
+	handlerFactory := EDACommandHandlerFactory
+		                  factoryWithEventStore: self eventStore
+		                  eventBus: self eventProducer.
+	commandRegistry := EDACommandHandlersRegistry
+		                   withScanner: handlerScanner
+		                   factory: handlerFactory
+		                   andProjectorClass: EDACompositeProjector.
+	self commandDispatcher:
+		(EDACommandDispatcher withRegistry: commandRegistry eventStore: self eventStore eventProducer: self eventProducer andProjectorClass: EDACompositeProjector)
 ]
 
 { #category : #'setup - events' }
@@ -685,9 +693,9 @@ EDAApplication >> setupEventProducer [
 
 { #category : #'setup - events' }
 EDAApplication >> setupEventStore [
-	self flag: #TODO.	"Find out how to customize the authentication of the specific Mongo instance"
-	self portSettings eventStore: (self portSettings eventStoreSettings buildAdapter)
-	self configureEventStoreAuthentication
+
+	self portSettings eventStore:
+		self portSettings eventStoreSettings buildAdapter
 ]
 
 { #category : #'setup - events' }
@@ -711,20 +719,6 @@ EDAApplication >> setupProjectionRepositoryForProjection: aProjectionClass [
 ]
 
 { #category : #'setup - projections' }
-EDAApplication >> setupProjections [
-	| projectionClasses |
-	projectionClasses := EDAProjection allSubclasses
-		reject: [ :projectionClass | 
-			(projectionClass name beginsWithSubCollection: 'EDATest')
-				or: [ projectionClass isAbstract ] ].
-	projectionClasses add: EDAProjection.
-	projectionClasses
-		do:
-			[ :projectionClass | 
-			self setupProjectionRepositoryForProjection: projectionClass ]
-]
-
-{ #category : #'setup - projections' }
 EDAApplication >> setupProjectorOfTenant: aTenant [
 	self
 		projectorsByTenant at: aTenant put:
@@ -736,15 +730,6 @@ EDAApplication >> setupProjectorOfTenant: aTenant [
 { #category : #'setup - projections' }
 EDAApplication >> setupProjectors [
 	self retrieveAllTenants do: [ :tenant | self setupProjectorOfTenant: tenant ]
-]
-
-{ #category : #'setup - repositories' }
-EDAApplication >> setupRepositories [
-	EDAAggregateRepository
-		allSubclassesDo: [ :repo | repo setupEventStore: self eventStore ].
-	EDAEventSourcingEvent voyageRepository: self eventStore repository.
-	EDAEventSourcingEvent
-		allSubclassesDo: [ :event | event voyageRepository: self eventStore repository ]
 ]
 
 { #category : #api }

@@ -85,6 +85,12 @@ EDAApplications >> addApplicationsSubscriber: aSubscriber [
 
 ]
 
+{ #category : #logic }
+EDAApplications >> clean [
+
+	self registry: nil
+]
+
 { #category : #initialization }
 EDAApplications >> doInitialize [
 	self addApplicationsSubscriber: EDAApplicationsSubscriber new

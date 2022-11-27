@@ -276,7 +276,8 @@ EDATDomainBDD >> givenAggregate: anAggregateRootSymbol withEvents: historicalEve
 				                    buildCommandDispatcherWithEventStore:
 				                    eventStore
 				                    eventProducer: mock
-				                    andProjectorClass: mock).
+				                    andProjectorClass: mock)
+		                   andErrorStrategy: EDAEJustLogErrorStrategy.
 	eventsOfAggregate := eventsToSave select: [ :e | 
 		                     e aggregateRootClass greaseString asSymbol
 		                     = anAggregateRootSymbol ].

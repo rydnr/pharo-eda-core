@@ -652,12 +652,14 @@ EDAApplication >> setupCommandConsumer [
 EDAApplication >> setupCommandConsumerWithCommandListener: listener [
 
 	| materializer |
-	listener client debug: self portSettings commandListenerSettings debug.
+	listener client debug:
+		self portSettings commandListenerSettings debug.
 	materializer := EDAJsonCommandMaterializer forApplication: self.
 	self commandConsumer: (EDAPCommandConsumer
 			 busListener: listener
 			 commandMaterializer: materializer
-			 commandDispatcher: self commandDispatcher)
+			 commandDispatcher: self commandDispatcher
+			andErrorStrategy: self commandListenerSettings errorStrategy)
 ]
 
 { #category : #setup }

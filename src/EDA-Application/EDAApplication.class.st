@@ -659,7 +659,7 @@ EDAApplication >> setupCommandConsumerWithCommandListener: listener [
 			 busListener: listener
 			 commandMaterializer: materializer
 			 commandDispatcher: self commandDispatcher
-			andErrorStrategy: self commandListenerSettings errorStrategy)
+			 andSettings: self commandListenerSettings)
 ]
 
 { #category : #setup }

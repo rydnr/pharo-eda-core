@@ -246,16 +246,6 @@ EDAApplication >> configFolder [
 	^ self rootFolder / 'config'
 ]
 
-{ #category : #'setup - events' }
-EDAApplication >> configureEventStoreAuthentication [
-		EDAAMongoEventStore authenticationMechanism beDefault
-]
-
-{ #category : #'setup - projections' }
-EDAApplication >> configureProjectionBackendAuthentication: anObject [
-	anObject configureAuthentication
-]
-
 { #category : #files }
 EDAApplication >> contractsFolder [
 
@@ -326,6 +316,12 @@ EDAApplication >> eventAnnouncer [
 { #category : #accessing }
 EDAApplication >> eventAnnouncer: anObject [
 	eventAnnouncer := anObject
+]
+
+{ #category : #subclassresponsibility }
+EDAApplication >> eventBaseClass [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #subclassresponsibility }
@@ -401,7 +397,7 @@ EDAApplication >> iconProvider: anObject [
 	iconProvider := anObject
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 EDAApplication >> initialize [
 	super initialize.
 	self doInitialize
@@ -696,8 +692,9 @@ EDAApplication >> setupEventProducer [
 { #category : #'setup - events' }
 EDAApplication >> setupEventStore [
 
-	self portSettings eventStore:
-		self portSettings eventStoreSettings buildAdapter
+	self eventStore: self portSettings eventStoreSettings buildAdapter.
+	EDAAggregateRepository allSubclassesDo: [ :repo | 
+		repo setupEventStore: self eventStore ]
 ]
 
 { #category : #'setup - events' }
@@ -710,14 +707,6 @@ EDAApplication >> setupLogging [
 	EDALogEvent announcer
 		when: EDALogEvent
 		do: [ :event | self logInfoMessage: event greaseString ]
-]
-
-{ #category : #'setup - projections' }
-EDAApplication >> setupProjectionRepositoryForProjection: aProjectionClass [
-	| repository |
-	repository := EDAAProjectionMongoRepository new.
-	self configureProjectionBackendAuthentication: repository.
-	aProjectionClass repository: repository
 ]
 
 { #category : #'setup - projections' }

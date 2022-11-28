@@ -116,6 +116,15 @@ BaselineOfPharoEDACore class >> includePharoEDAPorts: spec [
 ]
 
 { #category : #baselines }
+BaselineOfPharoEDACore class >> includeSpec: spec [
+
+	spec
+		baseline: 'Spec2'
+		with: [ spec repository: 'github://pharo-spec/Spec:Pharo10' ].
+	^ spec
+]
+
+{ #category : #baselines }
 BaselineOfPharoEDACore >> baseline: spec [
 
 	<baseline>
@@ -123,6 +132,7 @@ BaselineOfPharoEDACore >> baseline: spec [
 		spec blessing: #baseline.
 		spec postLoadDoIt: #postload:package:.
 		self class
+			includeSpec: spec;
 			includeBabyMock2: spec;
 			includeObjectDiff: spec;
 			includeNeoJSON: spec;

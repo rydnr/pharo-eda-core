@@ -655,7 +655,7 @@ EDAApplication >> setupCommandConsumerWithCommandListener: listener [
 			 busListener: listener
 			 commandMaterializer: materializer
 			 commandDispatcher: self commandDispatcher
-			 andSettings: self commandListenerSettings)
+			 forApp: self)
 ]
 
 { #category : #setup }

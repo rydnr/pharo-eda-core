@@ -257,7 +257,7 @@ EDATDomainBDD >> givenAggregate: anAggregateRootSymbol withEvents: historicalEve
 { #category : #BDD }
 EDATDomainBDD >> givenAggregate: anAggregateRootSymbol withEvents: historicalEvents whenReceiveMessage: aString thenEvents: expectedResultingEvents [
 
-	| commandConsumer resultingEvents mock eventStore expectedEvents eventsToSave aggregateRootVersion msg eventsOfAggregate originalEventStores settings |
+	| commandConsumer resultingEvents mock eventStore expectedEvents eventsToSave aggregateRootVersion msg eventsOfAggregate originalEventStores |
 	mock := EDAAcceptEverything new.
 	eventStore := EDAVolatileEventStore new.
 	originalEventStores := self retrieveEventStores.
@@ -277,7 +277,7 @@ EDATDomainBDD >> givenAggregate: anAggregateRootSymbol withEvents: historicalEve
 				                    eventStore
 				                    eventProducer: mock
 				                    andProjectorClass: mock)
-		                   andSettings: settings.
+		                   forApp: edaApplication.
 	eventsOfAggregate := eventsToSave select: [ :e | 
 		                     e aggregateRootClass greaseString asSymbol
 		                     = anAggregateRootSymbol ].

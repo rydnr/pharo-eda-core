@@ -692,9 +692,7 @@ EDAApplication >> setupEventProducer [
 { #category : #'setup - events' }
 EDAApplication >> setupEventStore [
 
-	self eventStore: self portSettings eventStoreSettings buildAdapter.
-	EDAAggregateRepository allSubclassesDo: [ :repo | 
-		repo setupEventStore: self eventStore ]
+	self eventStore: self portSettings eventStoreSettings buildAdapter
 ]
 
 { #category : #'setup - events' }

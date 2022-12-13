@@ -261,8 +261,7 @@ EDATDomainBDD >> givenAggregate: anAggregateRootSymbol withEvents: historicalEve
 	mock := EDAAcceptEverything new.
 	eventStore := EDAVolatileEventStore new.
 	originalEventStores := self retrieveEventStores.
-	[ 
-	self useEventStore: eventStore.
+
 	eventsToSave := self
 		                fixAggregateRootVersionsOfEvents: historicalEvents
 		                usingEventStore: eventStore.
@@ -302,8 +301,7 @@ EDATDomainBDD >> givenAggregate: anAggregateRootSymbol withEvents: historicalEve
 		expected := expectedEvents at: i.
 		self discardDateCreated: expected.
 		self discardAgent: expected.
-		self assertEvent: expected equals: actual ] ] ensure: [ 
-		self restoreEventStores: originalEventStores ]
+		self assertEvent: expected equals: actual ]
 ]
 
 { #category : #'test support' }
@@ -330,12 +328,6 @@ EDATDomainBDD >> readFile: aFile [
 	result := fileStream contents.
 	fileStream close.
 	^ result
-]
-
-{ #category : #'test support' }
-EDATDomainBDD >> restoreEventStores: aDictionary [
-	EDAAggregateRepository
-		allSubclassesDo: [ :c | c setupEventStore: (aDictionary at: c greaseString asSymbol) ]
 ]
 
 { #category : #'test support' }
@@ -381,10 +373,4 @@ EDATDomainBDD >> tearDown [
 
 	EDAApplications uniqueInstance unregister: self edaApplication.
 	self edaApplication: nil
-]
-
-{ #category : #'test support' }
-EDATDomainBDD >> useEventStore: anEventStore [
-	EDAAggregateRepository
-		allSubclassesDo: [ :c | c setupEventStore: anEventStore ]
 ]

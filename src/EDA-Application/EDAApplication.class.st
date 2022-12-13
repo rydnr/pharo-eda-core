@@ -683,10 +683,14 @@ EDAApplication >> setupEventAnnouncer [
 
 { #category : #'setup - events' }
 EDAApplication >> setupEventProducer [
+
 	| eventPublisher eventSerializer |
-	eventPublisher := EDAAEventStompTopicPublisher new.
+	eventPublisher := EDAAEventStompTopicPublisher withConfig: self portSettings eventPublisherSettings.
 	eventSerializer := EDAJsonEventSerializer new.
-	self eventProducer: (EDAPEventProducer publisher: eventPublisher serializer: eventSerializer announcer: self eventAnnouncer)
+	self eventProducer: (EDAPEventProducer
+			 publisher: eventPublisher
+			 serializer: eventSerializer
+			 announcer: self eventAnnouncer)
 ]
 
 { #category : #'setup - events' }

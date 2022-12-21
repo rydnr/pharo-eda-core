@@ -9,6 +9,11 @@ EDATestApplication >> commandClassPrefix [
 	^ self shouldBeImplemented
 ]
 
+{ #category : #accessing }
+EDATestApplication >> eventBaseClass [
+	^ self shouldBeImplemented
+]
+
 { #category : #subclassresponsibility }
 EDATestApplication >> eventClassPrefix [
 	^ self shouldBeImplemented

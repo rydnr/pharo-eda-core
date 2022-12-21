@@ -42,7 +42,8 @@ Class {
 		'description',
 		'iconProvider',
 		'iconName',
-		'projectionSynchronizationEnabled'
+		'projectionSynchronizationEnabled',
+		'tenant'
 	],
 	#category : #'EDA-Application-Core'
 }
@@ -423,34 +424,6 @@ EDAApplication >> isStarted: aBoolean [
 	isStarted := aBoolean
 ]
 
-{ #category : #logging }
-EDAApplication >> logSettings [
-	self
-		logDebugMessage: 'Command consumer: ' , self commandConsumer greaseString.
-	self
-		logDebugMessage: 'Command dispatcher: ' , self commandDispatcher greaseString.
-	self
-		logDebugMessage:
-			'Command listener client debug: '
-				, self commandListenerClientDebug greaseString.
-	self
-		logDebugMessage: 'Event announcer: ' , self eventAnnouncer greaseString.
-	self
-		logDebugMessage: 'Event producer: ' , self eventProducer greaseString.
-	self logDebugMessage: 'Event store: ' , self eventStore greaseString.
-	self
-		logDebugMessage:
-			'Projection synchronization enabled: '
-				, self enableSynchronization greaseString.
-	self
-		logDebugMessage: 'Projectors: ' , self projectorsByTenant greaseString
-]
-
-{ #category : #accessing }
-EDAApplication >> loggingSettingsPort [
-	^ self resolveLoggingSettingsPort
-]
-
 { #category : #accessing }
 EDAApplication >> notifyEnvironmentChangedFrom: oldValue to: newValue [
 
@@ -473,11 +446,6 @@ EDAApplication >> portSettings [
 EDAApplication >> portSettings: anAdapter [
 
 	portSettings := anAdapter
-]
-
-{ #category : #accessing }
-EDAApplication >> projectionSettingsPort [
-	^ self resolveProjectionsSettingsPort
 ]
 
 { #category : #accessing }
@@ -762,4 +730,16 @@ EDAApplication >> synchronizeProjectionsOfTenant: aTenant [
 	| projector |
 	projector := self projectorsByTenant at: aTenant ifAbsent: [ nil ].
 	projector ifNotNil: [ :p | p projectOfTenant: aTenant ]
+]
+
+{ #category : #accessing }
+EDAApplication >> tenant [
+
+	^ tenant
+]
+
+{ #category : #accessing }
+EDAApplication >> tenant: anObject [
+
+	tenant := anObject
 ]

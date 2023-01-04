@@ -5,13 +5,6 @@ Class {
 }
 
 { #category : #baselines }
-BaselineOfPharoEDACore class >> checkGToolkit: spec [
-
-	(self environment hasClassNamed: #GtImage) ifFalse: [ IceInvalidProject signal: 'You must use the official GlamorousToolkit image' ].
-	^ spec
-]
-
-{ #category : #baselines }
 BaselineOfPharoEDACore class >> declareGroupsIn: spec [
 
 	spec
@@ -53,8 +46,7 @@ BaselineOfPharoEDACore class >> declarePackagesIn: spec [
 		with: [ 
 			spec requires: #( 'BabyMock2' 'PharoEDACommon' 'EDA-TestSupport' ) ];
 		package: #'EDA-Domain-GT-Extensions'
-		with: [ spec requires: #( 'BabyMock2' 'PharoEDACommon'
-				   'GToolkit' ) ]
+		with: [ spec requires: #( 'BabyMock2' 'PharoEDACommon' ) ]
 ]
 
 { #category : #baselines }
@@ -134,7 +126,6 @@ BaselineOfPharoEDACore >> baseline: spec [
 			includeBabyMock2: spec;
 			includeObjectDiff: spec;
 			includeNeoJSON: spec;
-			checkGToolkit: spec;
 			includePharoEDACommon: spec;
 			includePharoEDAApi: spec;
 			includePharoEDAPorts: spec;

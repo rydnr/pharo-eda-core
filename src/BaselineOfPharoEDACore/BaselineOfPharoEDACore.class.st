@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #baselines }
+BaselineOfPharoEDACore class >> checkGToolkit: spec [
+
+	(self environment hasClassNamed: #GtImage) ifFalse: [ IceInvalidProject signal: 'You must use the official GlamorousToolkit image' ].
+	^ spec
+]
+
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> declareGroupsIn: spec [
 
 	spec
@@ -58,15 +65,6 @@ BaselineOfPharoEDACore class >> includeBabyMock2: spec [
 			className: #ConfigurationOfBabyMock2;
 			versionString: #stable;
 			repository: 'http://smalltalkhub.com/mc/zeroflag/BabyMock2/main/' ].
-	^ spec
-]
-
-{ #category : #baselines }
-BaselineOfPharoEDACore class >> includeGToolkit: spec [
-
-	spec
-		baseline: 'GToolkit'
-		with: [ spec repository: 'github://feenkcom/gtoolkit:master' ].
 	^ spec
 ]
 
@@ -136,7 +134,7 @@ BaselineOfPharoEDACore >> baseline: spec [
 			includeBabyMock2: spec;
 			includeObjectDiff: spec;
 			includeNeoJSON: spec;
-			includeGToolkit: spec;
+			checkGToolkit: spec;
 			includePharoEDACommon: spec;
 			includePharoEDAApi: spec;
 			includePharoEDAPorts: spec;

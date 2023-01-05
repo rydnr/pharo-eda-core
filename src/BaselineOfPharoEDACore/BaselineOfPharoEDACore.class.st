@@ -138,7 +138,7 @@ BaselineOfPharoEDACore >> postload: loader package: packageSpec [
 
 	| location |
 	location := (IceRepository registry detect: [ :each | 
-		             each name = 'pharo-eda' ]) location.
+		             each name = 'pharo-eda-core' ]) location.
 	EDACIconProvider addDefaultLocation: location / 'resources' / 'icons'.
 	EDACTranslationProvider addDefaultLocation:
 		location / 'resources' / 'l10n'

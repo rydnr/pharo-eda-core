@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfPharoEDACore }
+Package { #name : 'BaselineOfPharoEDACore' }

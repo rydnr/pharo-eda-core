@@ -1,11 +1,10 @@
 Class {
-	#name : 'BaselineOfPharoEDACore',
-	#superclass : 'BaselineOf',
-	#category : 'BaselineOfPharoEDACore',
-	#package : 'BaselineOfPharoEDACore'
+	#name : #BaselineOfPharoEDACore,
+	#superclass : #BaselineOf,
+	#category : #BaselineOfPharoEDACore
 }
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> declareGroupsIn: spec [
 
 	spec
@@ -19,7 +18,7 @@ BaselineOfPharoEDACore class >> declareGroupsIn: spec [
 		group: 'default' with: #( 'core' 'tests' )
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> declarePackagesIn: spec [
 
 	spec
@@ -50,17 +49,16 @@ BaselineOfPharoEDACore class >> declarePackagesIn: spec [
 		with: [ spec requires: #( 'BabyMock2' 'PharoEDACommon' ) ]
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> includeBabyMock2: spec [
 
-	spec project: 'BabyMock2' with: [ 
-		spec
-			className: #ConfigurationOfBabyMock2;
-			repository: 'http://smalltalkhub.com/mc/zeroflag/BabyMock2/main/' ].
+	spec
+		project: 'BabyMock2'
+		with: [ spec repository: 'github://rydnr/babymock2:main' ].
 	^ spec
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> includeNeoJSON: spec [
 
 	spec
@@ -69,7 +67,7 @@ BaselineOfPharoEDACore class >> includeNeoJSON: spec [
 	^ spec
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> includeObjectDiff: spec [
 
 	spec
@@ -78,7 +76,7 @@ BaselineOfPharoEDACore class >> includeObjectDiff: spec [
 	^ spec
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> includePharoEDAApi: spec [
 
 	spec
@@ -87,7 +85,7 @@ BaselineOfPharoEDACore class >> includePharoEDAApi: spec [
 	^ spec
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> includePharoEDACommon: spec [
 
 	spec
@@ -96,7 +94,7 @@ BaselineOfPharoEDACore class >> includePharoEDACommon: spec [
 	^ spec
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> includePharoEDAPorts: spec [
 
 	spec
@@ -105,7 +103,7 @@ BaselineOfPharoEDACore class >> includePharoEDAPorts: spec [
 	^ spec
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore class >> includeSpec: spec [
 
 	spec
@@ -114,7 +112,7 @@ BaselineOfPharoEDACore class >> includeSpec: spec [
 	^ spec
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore >> baseline: spec [
 
 	<baseline>
@@ -133,7 +131,7 @@ BaselineOfPharoEDACore >> baseline: spec [
 			declareGroupsIn: spec ]
 ]
 
-{ #category : 'baselines' }
+{ #category : #baselines }
 BaselineOfPharoEDACore >> postload: loader package: packageSpec [
 
 	| location |

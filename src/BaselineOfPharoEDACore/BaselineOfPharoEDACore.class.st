@@ -53,7 +53,7 @@ BaselineOfPharoEDACore class >> declarePackagesIn: spec [
 BaselineOfPharoEDACore class >> includeBabyMock2: spec [
 
 	spec
-		project: 'BabyMock2'
+		baseline: 'BabyMock2'
 		with: [ spec repository: 'github://rydnr/babymock2:main' ].
 	^ spec
 ]

@@ -134,10 +134,16 @@ BaselineOfPharoEDACore >> baseline: spec [
 { #category : #baselines }
 BaselineOfPharoEDACore >> postload: loader package: packageSpec [
 
-	| location |
-	location := (IceRepository registry detect: [ :each | 
-		             each name = 'pharo-eda-core' ]) location.
-	EDACIconProvider addDefaultLocation: location / 'resources' / 'icons'.
-	EDACTranslationProvider addDefaultLocation:
-		location / 'resources' / 'l10n'
+	Locale localeID: 'es'.
+	(IceRepository registry
+		 detect: [ :each | each name = 'pharo-eda-core' ]
+		 ifNone: nil) ifNotNil: [ :repo |
+		| location |
+		location := repo location.
+		EDACIconProvider addDefaultLocation:
+			location / 'resources' / 'icons'.
+		EDACTranslationProvider addDefaultLocation:
+			location / 'resources' / 'l10n'.
+		NaturalLanguageTranslator current:
+			EDACCompositeTranslationProvider wrapCurrent ]
 ]
